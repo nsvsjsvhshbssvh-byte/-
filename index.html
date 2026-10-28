@@ -6,165 +6,235 @@
 <title>جوائز صنّاع روبلوكس</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0f0b1e;--card:#1a1433;--tx:#f4f1ff;--mut:#a79fc9;--ac:#f5b942;--ac2:#7c5cff;--bd:#2d2552}
+:root{--bg1:#8a5cb8;--bg2:#6b3f9e;--tx:#fff;--mut:#e3d3f5;--g1:#f8e7a8;--g2:#c9973a;--g3:#f2d78a}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tx);font-family:'Cairo',system-ui,sans-serif}
-header{text-align:center;padding:36px 16px 20px;background:linear-gradient(160deg,var(--ac2),transparent 70%)}
-h1{margin:0;font-size:clamp(28px,6vw,46px);font-weight:900}h1 span{color:var(--ac)}
-header p{color:var(--mut);margin:8px 0 0}
+body{margin:0;color:var(--tx);font-family:'Cairo',system-ui,sans-serif;min-height:100vh;
+background:radial-gradient(circle at 50% 0,#a577d2 0,transparent 55%),linear-gradient(180deg,var(--bg1),var(--bg2));background-attachment:fixed}
+.gold{background:linear-gradient(180deg,var(--g1),var(--g2) 55%,var(--g3));-webkit-background-clip:text;background-clip:text;color:transparent}
+/* تحميل */
+#loader{position:fixed;inset:0;z-index:99;display:grid;place-items:center;text-align:center;background:radial-gradient(circle at 50% 40%,#9a6bc8,#5d3490 75%);transition:opacity .8s,visibility .8s}
+#loader.hide{opacity:0;visibility:hidden}
+#loader svg{width:150px;height:150px;animation:float 2.2s ease-in-out infinite;filter:drop-shadow(0 12px 28px rgba(0,0,0,.35))}
+.lt{font-size:30px;font-weight:900;margin:8px 0 18px}
+.pb{width:min(260px,70vw);height:5px;border-radius:9px;background:rgba(255,255,255,.2);margin:0 auto;overflow:hidden}
+.pb i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--g1),var(--g2));animation:fill 2.4s ease-out forwards}
+@keyframes fill{to{width:100%}}
+@keyframes float{50%{transform:translateY(-12px) scale(1.05)}}
+@keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+header{text-align:center;padding:44px 16px 10px}
+h1{margin:0;font-size:clamp(34px,9vw,64px);font-weight:900;line-height:1.15}
+header p{color:var(--mut);margin:10px 0 0;font-size:17px}
 main{max-width:1000px;margin:0 auto;padding:16px}
-.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px}
-.badge{font-size:13px;color:var(--mut)}
-button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:9px 16px;background:var(--ac2);color:#fff;font-weight:700}
-button.gold{background:var(--ac);color:#1b1535}
-button.del{background:#e5484d;padding:6px 12px;font-size:13px}
-button:disabled{opacity:.5}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;overflow:hidden;text-align:center;padding-bottom:14px}
-.card img,.ph{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:var(--bd)}
-.ph{display:grid;place-items:center;font-size:48px}
-.card h3{margin:12px 8px 2px}
-.tag{display:inline-block;background:var(--ac);color:#1b1535;border-radius:20px;padding:2px 12px;font-size:13px;font-weight:700}
-.card p{color:var(--mut);font-size:14px;margin:8px 12px}
-.panel{background:var(--card);border:1px solid var(--ac);border-radius:16px;padding:16px;margin-bottom:18px}
-.panel h2{margin:0 0 10px;font-size:18px}
-.f{display:grid;gap:8px}
-input,textarea{font:inherit;width:100%;padding:10px;border-radius:10px;border:1px solid var(--bd);background:var(--bg);color:var(--tx)}
-.empty{text-align:center;color:var(--mut);padding:40px 0}
-footer{text-align:center;color:var(--mut);padding:30px 16px;font-size:14px;border-top:1px solid var(--bd);margin-top:30px}
-footer b{color:var(--ac)}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.badge{font-size:14px;color:var(--mut)}
+button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:10px 20px;background:linear-gradient(180deg,var(--g1),var(--g2));color:#3b1d63;font-weight:900;box-shadow:0 6px 16px rgba(0,0,0,.25);transition:transform .2s}
+button:hover{transform:translateY(-2px)}
+button.ghost{background:rgba(255,255,255,.15);color:#fff;box-shadow:none;border:1px solid rgba(255,255,255,.35)}
+button.del{background:#e5484d;color:#fff;padding:6px 14px;font-size:13px}
+button:disabled{opacity:.55;cursor:default;transform:none}
+h2.cat{text-align:center;font-size:26px;margin:34px 0 18px;font-weight:900}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:18px;max-width:900px;margin:0 auto}
+.arch{position:relative;border:2.5px solid var(--g2);border-radius:999px 999px 18px 18px;padding:10px 10px 14px;text-align:center;background:rgba(255,255,255,.07);backdrop-filter:blur(6px);animation:rise .6s both;transition:transform .3s,box-shadow .3s}
+.arch:hover{transform:translateY(-8px);box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.arch.won{box-shadow:0 0 0 3px var(--g1),0 0 30px rgba(248,231,168,.6)}
+.ph{width:100%;aspect-ratio:3/4;border-radius:999px 999px 10px 10px;object-fit:cover;object-position:top;display:block;background:rgba(0,0,0,.2)}
+div.ph{display:grid;place-items:center;font-size:54px}
+.arch h3{margin:10px 4px 2px;font-size:19px;font-weight:900}
+.arch p{color:var(--mut);font-size:13px;margin:4px 6px 8px}
+.cnt{font-size:13px;color:var(--g1);margin-bottom:6px}
+.panel{background:rgba(0,0,0,.22);border:1px solid rgba(248,231,168,.5);border-radius:20px;padding:18px;margin:0 auto 22px;max-width:520px}
+.panel h2{margin:0 0 12px;font-size:19px}
+.f{display:grid;gap:10px}
+input,textarea{font:inherit;width:100%;padding:11px;border-radius:12px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.92);color:#2b1660}
+.tabs{display:flex;gap:8px;margin-bottom:12px}.tabs button{flex:1}
+.empty{text-align:center;color:var(--mut);padding:50px 0;font-size:18px}
+.msg{font-size:14px;color:var(--g1);min-height:18px}
+footer{text-align:center;color:var(--mut);padding:30px 16px;font-size:14px;border-top:1px solid rgba(255,255,255,.2);margin-top:40px}
+footer b{color:var(--g1)}
 [hidden]{display:none!important}
 </style>
 </head>
 <body>
+<div id="loader"><div>
+<svg viewBox="0 0 100 100"><defs><linearGradient id="gg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8e7a8"/><stop offset=".55" stop-color="#c9973a"/><stop offset="1" stop-color="#f2d78a"/></linearGradient></defs>
+<path d="M18 40a32 32 0 0 0 64 0" fill="none" stroke="url(#gg)" stroke-width="5" stroke-linecap="round"/>
+<path d="M27 38a23 23 0 0 0 46 0" fill="none" stroke="url(#gg)" stroke-width="4" stroke-linecap="round"/>
+<path d="M50 14c8 4 10 12 4 20l-4 8-4-8c-6-8-4-16 4-20z" fill="url(#gg)"/>
+<rect x="46" y="44" width="8" height="34" rx="3" fill="url(#gg)"/>
+<path d="M32 90h36l-4-12H36z" fill="url(#gg)"/></svg>
+<div class="lt gold">جوائز صنّاع روبلوكس</div><div class="pb"><i></i></div></div></div>
+
 <header>
-<h1>🏆 جوائز <span>صنّاع روبلوكس</span></h1>
-<p>رشّح، صوّت، واحتفِ بأفضل المبدعين في مجتمع روبلوكس</p>
+<h1 class="gold">جوائز صنّاع<br>روبلوكس</h1>
+<p>اختر مبدعك المفضّل — صوت واحد لكل فئة</p>
 </header>
 <main>
 <div class="bar"><span class="badge" id="role">زائر</span>
-<span><button id="showLogin" class="gold">🔐 دخول المشرف</button><button id="logout" hidden>خروج</button></span></div>
+<span><button id="showLogin">🔐 دخول / تسجيل</button><button id="logout" class="ghost" hidden>خروج</button></span></div>
 
 <section id="login" class="panel" hidden>
-<h2>🔐 تسجيل دخول المشرف</h2>
+<div class="tabs"><button id="tLogin">دخول</button><button id="tReg" class="ghost">حساب جديد</button></div>
 <div class="f">
+<input id="nm" placeholder="الاسم" hidden>
 <input id="em" type="email" placeholder="الإيميل" autocomplete="username">
-<input id="pw" type="password" placeholder="كلمة المرور" autocomplete="current-password">
-<button id="go" class="gold">دخول</button>
-<span id="lst" class="badge"></span>
+<input id="pw" type="password" placeholder="كلمة المرور (6 أحرف فأكثر)" autocomplete="current-password">
+<button id="go">دخول</button>
+<span id="lst" class="msg"></span>
 </div>
 </section>
 
 <section id="admin" class="panel" hidden>
-<h2>⚙️ لوحة المشرف — إضافة مرشّح</h2>
+<h2 class="gold">⚙️ لوحة المشرف — إضافة مرشّح</h2>
 <div class="f">
 <input id="n" placeholder="اسم الشخص" maxlength="60">
-<input id="a" placeholder="الجائزة / الفئة (مثال: أفضل مطوّر)" maxlength="60">
+<input id="a" placeholder="الفئة (مثال: أفضل مطوّر)" maxlength="60">
 <textarea id="d" rows="2" placeholder="وصف مختصر (اختياري)" maxlength="200"></textarea>
 <input id="p" type="file" accept="image/*">
-<button id="add" class="gold">➕ إضافة</button>
-<span id="st" class="badge"></span>
+<button id="add">➕ إضافة</button>
+<span id="st" class="msg"></span>
 </div>
 </section>
 
-<div id="grid" class="grid"></div>
+<div id="out"></div>
 <div id="empty" class="empty" hidden>لا يوجد مرشّحون بعد.</div>
 </main>
 <footer>جميع الحقوق محفوظة © <b>Sphinx</b> (سفنكس) &amp; <b>Ranio</b> (رانيو)</footer>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, addDoc, deleteDoc, setDoc, doc, onSnapshot, query, orderBy, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-/* ====== ضع إعدادات Firebase حقك هنا ====== */
+/* ====== ضع إعدادات Firebase وإيميل المشرف هنا ====== */
 const firebaseConfig = {
   apiKey: "PUT_YOUR_API_KEY",
   authDomain: "PUT_YOUR_PROJECT.firebaseapp.com",
   projectId: "PUT_YOUR_PROJECT_ID",
   appId: "PUT_YOUR_APP_ID"
 };
-/* ========================================== */
+const ADMIN_EMAIL = "ضع-إيميل-المشرف@gmail.com";
+/* ================================================== */
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+const app = initializeApp(firebaseConfig), auth = getAuth(app), db = getFirestore(app);
 const $ = id => document.getElementById(id);
-let isAdmin = false, rows = [];
+let user = null, isAdmin = false, rows = [], mine = {}, counts = {}, mode = 'login', unsubV = null;
 
 function render(){
-  const g = $('grid'); g.textContent = '';
+  const out = $('out'); out.textContent = '';
   $('empty').hidden = rows.length > 0;
-  rows.forEach(r => {
-    const c = document.createElement('div'); c.className = 'card';
-    if (r.photo){ const i = document.createElement('img'); i.src = r.photo; i.alt = r.name; c.appendChild(i); }
-    else { const p = document.createElement('div'); p.className = 'ph'; p.textContent = '👤'; c.appendChild(p); }
-    const h = document.createElement('h3'); h.textContent = r.name; c.appendChild(h);
-    if (r.award){ const t = document.createElement('span'); t.className = 'tag'; t.textContent = r.award; c.appendChild(t); }
-    if (r.desc){ const p = document.createElement('p'); p.textContent = r.desc; c.appendChild(p); }
-    if (isAdmin){
-      const b = document.createElement('button'); b.className = 'del'; b.textContent = '🗑 حذف';
-      b.onclick = async () => {
-        if (!confirm('حذف ' + r.name + '؟')) return;
-        try { await deleteDoc(doc(db, 'nominees', r.id)); } catch(e){ alert('تعذّر الحذف'); }
-      };
+  const cats = {};
+  rows.forEach(r => (cats[r.award || 'عام'] = cats[r.award || 'عام'] || []).push(r));
+  Object.keys(cats).forEach(name => {
+    const key = encodeURIComponent(name);
+    const h = document.createElement('h2'); h.className = 'cat gold'; h.textContent = name; out.appendChild(h);
+    const g = document.createElement('div'); g.className = 'grid';
+    const voted = mine[key];
+    cats[name].forEach((r, i) => {
+      const c = document.createElement('div'); c.className = 'arch' + (voted === r.id ? ' won' : ''); c.style.animationDelay = (i * 0.08) + 's';
+      if (r.photo){ const im = document.createElement('img'); im.className = 'ph'; im.src = r.photo; im.alt = r.name; c.appendChild(im); }
+      else { const p = document.createElement('div'); p.className = 'ph'; p.textContent = '👤'; c.appendChild(p); }
+      const t = document.createElement('h3'); t.className = 'gold'; t.textContent = r.name; c.appendChild(t);
+      if (r.desc){ const p = document.createElement('p'); p.textContent = r.desc; c.appendChild(p); }
+      if (isAdmin){ const n = document.createElement('div'); n.className = 'cnt'; n.textContent = 'الأصوات: ' + (counts[r.id] || 0); c.appendChild(n); }
+      const b = document.createElement('button');
+      if (voted === r.id){ b.textContent = '✔ صوتّك'; b.disabled = true; }
+      else if (voted){ b.textContent = 'تم التصويت'; b.disabled = true; }
+      else { b.textContent = '🗳 صوّت'; b.onclick = () => vote(r, key); }
       c.appendChild(b);
-    }
-    g.appendChild(c);
+      if (isAdmin){ const d = document.createElement('button'); d.className = 'del'; d.textContent = '🗑'; d.style.marginInlineStart = '6px';
+        d.onclick = async () => { if (confirm('حذف ' + r.name + '؟')) try { await deleteDoc(doc(db, 'nominees', r.id)); } catch(e){ alert('تعذّر الحذف'); } };
+        c.appendChild(d); }
+      g.appendChild(c);
+    });
+    out.appendChild(g);
   });
 }
 
+async function vote(r, key){
+  if (!user){ $('login').hidden = false; $('lst').textContent = 'سجّل دخولك أولاً عشان تصوّت'; scrollTo({top:0,behavior:'smooth'}); return; }
+  if (!confirm('تأكيد التصويت لـ ' + r.name + '؟ لا يمكن تغييره بعدين.')) return;
+  try {
+    await setDoc(doc(db, 'votes', user.uid + '_' + key), { uid: user.uid, cat: key, nid: r.id, t: Date.now() });
+    alert('تم تسجيل صوتك ✅');
+  } catch(e){ alert('أنت صوّتّ في هذه الفئة مسبقاً ❌'); }
+}
+
 onAuthStateChanged(auth, u => {
-  isAdmin = !!u;
-  $('admin').hidden = !isAdmin;
-  $('login').hidden = true;
-  $('showLogin').hidden = isAdmin;
-  $('logout').hidden = !isAdmin;
-  $('role').textContent = isAdmin ? '✅ مشرف: ' + u.email : 'زائر';
+  user = u; isAdmin = !!u && u.email && u.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+  $('login').hidden = true; $('admin').hidden = !isAdmin;
+  $('showLogin').hidden = !!u; $('logout').hidden = !u;
+  $('role').textContent = !u ? 'زائر' : (isAdmin ? '✅ مشرف' : '👋 ' + (u.displayName || u.email));
+  mine = {}; counts = {}; if (unsubV){ unsubV(); unsubV = null; }
+  if (u){
+    const q = isAdmin ? collection(db, 'votes') : query(collection(db, 'votes'), where('uid', '==', u.uid));
+    unsubV = onSnapshot(q, s => {
+      mine = {}; counts = {};
+      s.docs.forEach(d => { const v = d.data(); counts[v.nid] = (counts[v.nid] || 0) + 1; if (v.uid === u.uid) mine[v.cat] = v.nid; });
+      render();
+    }, () => {});
+  }
   render();
 });
 
-onSnapshot(query(collection(db, 'nominees'), orderBy('t', 'desc')), snap => {
-  rows = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-  render();
+onSnapshot(query(collection(db, 'nominees'), orderBy('t', 'desc')), s => {
+  rows = s.docs.map(d => ({ id: d.id, ...d.data() })); render();
 }, () => {});
 
 $('showLogin').onclick = () => { $('login').hidden = false; };
 $('logout').onclick = () => signOut(auth);
+function setMode(m){
+  mode = m; $('nm').hidden = m !== 'reg'; $('go').textContent = m === 'reg' ? 'إنشاء الحساب' : 'دخول';
+  $('tLogin').className = m === 'login' ? '' : 'ghost'; $('tReg').className = m === 'reg' ? '' : 'ghost'; $('lst').textContent = '';
+}
+$('tLogin').onclick = () => setMode('login'); $('tReg').onclick = () => setMode('reg');
+
+const errs = {
+  'auth/email-already-in-use': 'هذا الإيميل مسجّل مسبقاً ❌ سجّل دخولك بدل التسجيل',
+  'auth/invalid-credential': 'الإيميل أو كلمة المرور غير صحيحة',
+  'auth/invalid-email': 'الإيميل غير صحيح',
+  'auth/weak-password': 'كلمة المرور ضعيفة (6 أحرف فأكثر)',
+  'auth/too-many-requests': 'محاولات كثيرة، جرّب بعد شوي'
+};
 $('go').onclick = async () => {
-  $('lst').textContent = 'جاري الدخول...';
-  try { await signInWithEmailAndPassword(auth, $('em').value.trim(), $('pw').value); $('pw').value = ''; }
-  catch(e){ $('lst').textContent = 'الإيميل أو كلمة المرور غير صحيحة'; }
+  const em = $('em').value.trim(), pw = $('pw').value, nm = $('nm').value.trim();
+  if (!em || !pw){ $('lst').textContent = 'عبّ الإيميل وكلمة المرور'; return; }
+  if (mode === 'reg' && !nm){ $('lst').textContent = 'اكتب اسمك'; return; }
+  $('lst').textContent = '...'; $('go').disabled = true;
+  try {
+    if (mode === 'reg'){ const c = await createUserWithEmailAndPassword(auth, em, pw); await updateProfile(c.user, { displayName: nm }); }
+    else await signInWithEmailAndPassword(auth, em, pw);
+    $('pw').value = '';
+  } catch(e){ $('lst').textContent = errs[e.code] || 'صار خطأ، حاول مرة ثانية'; }
+  $('go').disabled = false;
 };
 
-// ضغط الصورة وتحويلها لنص صغير (بدون Firebase Storage)
-function shrink(file, max = 400){
+function shrink(file, max = 500){
   return new Promise((res, rej) => {
     const img = new Image(), url = URL.createObjectURL(file);
     img.onload = () => {
       const s = Math.min(1, max / Math.max(img.width, img.height));
-      const c = document.createElement('canvas');
-      c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
-      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
-      URL.revokeObjectURL(url); res(c.toDataURL('image/jpeg', 0.8));
+      const c = document.createElement('canvas'); c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url); res(c.toDataURL('image/jpeg', 0.8));
     };
     img.onerror = rej; img.src = url;
   });
 }
-
 $('add').onclick = async () => {
   const name = $('n').value.trim();
   if (!name){ $('st').textContent = 'اكتب الاسم أولاً'; return; }
   $('add').disabled = true; $('st').textContent = 'جاري الإضافة...';
   try {
-    const f = $('p').files[0];
-    const photo = f ? await shrink(f) : '';
-    await addDoc(collection(db, 'nominees'), { name, award: $('a').value.trim(), desc: $('d').value.trim(), photo, t: Date.now() });
-    $('n').value = $('a').value = $('d').value = $('p').value = '';
-    $('st').textContent = 'تمت الإضافة ✅';
+    const f = $('p').files[0]; const photo = f ? await shrink(f) : '';
+    await addDoc(collection(db, 'nominees'), { name, award: $('a').value.trim() || 'عام', desc: $('d').value.trim(), photo, t: Date.now() });
+    $('n').value = $('a').value = $('d').value = $('p').value = ''; $('st').textContent = 'تمت الإضافة ✅';
   } catch(e){ $('st').textContent = 'فشلت الإضافة (تأكد من قواعد Firestore)'; }
   $('add').disabled = false;
 };
+
+// إخفاء شاشة التحميل
+const t0 = Date.now(), L = $('loader');
+const hide = () => setTimeout(() => { L.classList.add('hide'); setTimeout(() => L.remove(), 900); }, Math.max(0, 2600 - (Date.now() - t0)));
+document.readyState === 'complete' ? hide() : addEventListener('load', hide);
 </script>
 </body>
 </html>
