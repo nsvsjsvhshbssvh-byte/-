@@ -1,288 +1,170 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KSR Store | منصة الأدوات والتحميل</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-        }
-
-        body {
-            background: #090a0f;
-            background-image: radial-gradient(circle at top, #1a1c29 0%, #090a0f 100%);
-            color: #f8fafc;
-            min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* شاشة ترحيبية أنيقة بدلاً من القديمة */
-        #loader {
-            position: fixed;
-            inset: 0;
-            background: #090a0f;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease;
-        }
-
-        .loader-brand {
-            font-size: 32px;
-            font-weight: 800;
-            background: linear-gradient(45deg, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 2px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 420px;
-            margin-top: 10px;
-        }
-
-        /* نافذة الهيدر بتصميم مختلف تماماً */
-        .header-box {
-            background: rgba(25, 28, 42, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        .header-title {
-            font-weight: 700;
-            font-size: 18px;
-            color: #38bdf8;
-        }
-
-        /* البطاقة الرئيسية بهيكل جديد وحواف دائرية مختلفة */
-        .main-card {
-            background: rgba(18, 20, 32, 0.75);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(56, 189, 248, 0.15);
-            border-radius: 24px;
-            padding: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            margin-bottom: 20px;
-        }
-
-        .preview-img-box {
-            width: 100%;
-            border-radius: 14px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 20px;
-            background: #0f111a;
-        }
-
-        .preview-img-box img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .section-heading {
-            font-size: 17px;
-            color: #e2e8f0;
-            margin-bottom: 14px;
-            font-weight: 600;
-            text-align: right;
-        }
-
-        /* قائمة المميزات بتصميم شبكي وعلامات مميزة */
-        .features-grid {
-            list-style: none;
-            margin-bottom: 20px;
-        }
-
-        .features-grid li {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 10px 14px;
-            border-radius: 10px;
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: #cbd5e1;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .features-grid li span {
-            color: #38bdf8;
-            font-size: 12px;
-        }
-
-        /* شارة الحالة بتصميم عصري صغير */
-        .status-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            color: #34d399;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-
-        .status-pill::before {
-            content: '';
-            width: 7px;
-            height: 7px;
-            background: #34d399;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #34d399;
-        }
-
-        /* أزرار التحميل بتدرجات لقمة الاحترافية */
-        .action-button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            width: 100%;
-            padding: 14px;
-            margin-bottom: 12px;
-            background: linear-gradient(135deg, #0284c7, #0369a1);
-            color: white;
-            text-decoration: none;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 15px;
-            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3);
-            transition: transform 0.2s, opacity 0.2s;
-            border: none;
-        }
-
-        .action-button.alt {
-            background: linear-gradient(135deg, #4f46e5, #4338ca);
-            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
-        }
-
-        .action-button:active {
-            transform: scale(0.97);
-        }
-
-        .discord-box {
-            background: rgba(18, 20, 32, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 18px;
-            padding: 16px;
-            text-align: center;
-        }
-
-        .discord-link {
-            display: inline-block;
-            margin-top: 8px;
-            color: #38bdf8;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .discord-link:hover {
-            text-decoration: underline;
-        }
-
-        footer {
-            margin-top: 25px;
-            font-size: 12px;
-            color: #64748b;
-            text-align: center;
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>جوائز صنّاع روبلوكس</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0b1e;--card:#1a1433;--tx:#f4f1ff;--mut:#a79fc9;--ac:#f5b942;--ac2:#7c5cff;--bd:#2d2552}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:'Cairo',system-ui,sans-serif}
+header{text-align:center;padding:36px 16px 20px;background:linear-gradient(160deg,var(--ac2),transparent 70%)}
+h1{margin:0;font-size:clamp(28px,6vw,46px);font-weight:900}h1 span{color:var(--ac)}
+header p{color:var(--mut);margin:8px 0 0}
+main{max-width:1000px;margin:0 auto;padding:16px}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px}
+.badge{font-size:13px;color:var(--mut)}
+button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:9px 16px;background:var(--ac2);color:#fff;font-weight:700}
+button.gold{background:var(--ac);color:#1b1535}
+button.del{background:#e5484d;padding:6px 12px;font-size:13px}
+button:disabled{opacity:.5}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;overflow:hidden;text-align:center;padding-bottom:14px}
+.card img,.ph{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:var(--bd)}
+.ph{display:grid;place-items:center;font-size:48px}
+.card h3{margin:12px 8px 2px}
+.tag{display:inline-block;background:var(--ac);color:#1b1535;border-radius:20px;padding:2px 12px;font-size:13px;font-weight:700}
+.card p{color:var(--mut);font-size:14px;margin:8px 12px}
+.panel{background:var(--card);border:1px solid var(--ac);border-radius:16px;padding:16px;margin-bottom:18px}
+.panel h2{margin:0 0 10px;font-size:18px}
+.f{display:grid;gap:8px}
+input,textarea{font:inherit;width:100%;padding:10px;border-radius:10px;border:1px solid var(--bd);background:var(--bg);color:var(--tx)}
+.empty{text-align:center;color:var(--mut);padding:40px 0}
+footer{text-align:center;color:var(--mut);padding:30px 16px;font-size:14px;border-top:1px solid var(--bd);margin-top:30px}
+footer b{color:var(--ac)}
+[hidden]{display:none!important}
+</style>
 </head>
 <body>
+<header>
+<h1>🏆 جوائز <span>صنّاع روبلوكس</span></h1>
+<p>رشّح، صوّت، واحتفِ بأفضل المبدعين في مجتمع روبلوكس</p>
+</header>
+<main>
+<div class="bar"><span class="badge" id="role">زائر</span>
+<span><button id="showLogin" class="gold">🔐 دخول المشرف</button><button id="logout" hidden>خروج</button></span></div>
 
-    <div id="loader">
-        <div class="loader-brand">KSR Hub</div>
-    </div>
+<section id="login" class="panel" hidden>
+<h2>🔐 تسجيل دخول المشرف</h2>
+<div class="f">
+<input id="em" type="email" placeholder="الإيميل" autocomplete="username">
+<input id="pw" type="password" placeholder="كلمة المرور" autocomplete="current-password">
+<button id="go" class="gold">دخول</button>
+<span id="lst" class="badge"></span>
+</div>
+</section>
 
-    <div class="container">
-        
-        <div class="header-box">
-            <div class="header-title">KSR Dashboard</div>
-            <div style="font-size: 14px; color: #94a3b8;">v2.5</div>
-        </div>
+<section id="admin" class="panel" hidden>
+<h2>⚙️ لوحة المشرف — إضافة مرشّح</h2>
+<div class="f">
+<input id="n" placeholder="اسم الشخص" maxlength="60">
+<input id="a" placeholder="الجائزة / الفئة (مثال: أفضل مطوّر)" maxlength="60">
+<textarea id="d" rows="2" placeholder="وصف مختصر (اختياري)" maxlength="200"></textarea>
+<input id="p" type="file" accept="image/*">
+<button id="add" class="gold">➕ إضافة</button>
+<span id="st" class="badge"></span>
+</div>
+</section>
 
-        <div class="main-card">
-            <div class="preview-img-box">
-                <img src="https://i.ibb.co/3m12345/delta.png" alt="Delta" id="toolImg">
-            </div>
+<div id="grid" class="grid"></div>
+<div id="empty" class="empty" hidden>لا يوجد مرشّحون بعد.</div>
+</main>
+<footer>جميع الحقوق محفوظة © <b>Sphinx</b> (سفنكس) &amp; <b>Ranio</b> (رانيو)</footer>
 
-            <div class="section-heading">مميزات النسخة</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-            <ul class="features-grid">
-                <li>من اقوى الهاكات حمايةً <span>✦</span></li>
-                <li>سهولة الحصول على المفتاح <span>✦</span></li>
-                <li>يمكنك بحث السكريبتات فيه <span>✦</span></li>
-            </ul>
+/* ====== ضع إعدادات Firebase حقك هنا ====== */
+const firebaseConfig = {
+  apiKey: "PUT_YOUR_API_KEY",
+  authDomain: "PUT_YOUR_PROJECT.firebaseapp.com",
+  projectId: "PUT_YOUR_PROJECT_ID",
+  appId: "PUT_YOUR_APP_ID"
+};
+/* ========================================== */
 
-            <div>
-                <div class="status-pill">حالة الأداة: تعمل بكفاءة</div>
-            </div>
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const $ = id => document.getElementById(id);
+let isAdmin = false, rows = [];
 
-            <a href="itms-services://?action=download-manifest&url=https://delta.bz/manifest.plist" class="action-button">
-        
-             (تحميل)
-            </a>
-            
-            <a href="itms-services://?action=download-manifest&url=https://delta.bz/manifest.plist" class="action-button alt">
-                تحميل احتياطي (بديل) 
-            </a>
-        </div>
+function render(){
+  const g = $('grid'); g.textContent = '';
+  $('empty').hidden = rows.length > 0;
+  rows.forEach(r => {
+    const c = document.createElement('div'); c.className = 'card';
+    if (r.photo){ const i = document.createElement('img'); i.src = r.photo; i.alt = r.name; c.appendChild(i); }
+    else { const p = document.createElement('div'); p.className = 'ph'; p.textContent = '👤'; c.appendChild(p); }
+    const h = document.createElement('h3'); h.textContent = r.name; c.appendChild(h);
+    if (r.award){ const t = document.createElement('span'); t.className = 'tag'; t.textContent = r.award; c.appendChild(t); }
+    if (r.desc){ const p = document.createElement('p'); p.textContent = r.desc; c.appendChild(p); }
+    if (isAdmin){
+      const b = document.createElement('button'); b.className = 'del'; b.textContent = '🗑 حذف';
+      b.onclick = async () => {
+        if (!confirm('حذف ' + r.name + '؟')) return;
+        try { await deleteDoc(doc(db, 'nominees', r.id)); } catch(e){ alert('تعذّر الحذف'); }
+      };
+      c.appendChild(b);
+    }
+    g.appendChild(c);
+  });
+}
 
-        <div class="discord-box">
-            <h3 style="font-size: 15px; color: #f8fafc; margin-bottom: 4px;">مجتمع الديسكورد</h3>
-            <p style="font-size: 12px; color: #94a3b8;">تابع آخر التحديثات والأخبار أول بأول.</p>
-            <a href="https://discord.gg/4nn9R3SSF" target="_blank" class="discord-link">discord.gg/4nn9R3SSF</a>
-        </div>
+onAuthStateChanged(auth, u => {
+  isAdmin = !!u;
+  $('admin').hidden = !isAdmin;
+  $('login').hidden = true;
+  $('showLogin').hidden = isAdmin;
+  $('logout').hidden = !isAdmin;
+  $('role').textContent = isAdmin ? '✅ مشرف: ' + u.email : 'زائر';
+  render();
+});
 
-        <footer>
-            جميع الحقوق محفوظة © KSR 2026
-        </footer>
-    </div>
+onSnapshot(query(collection(db, 'nominees'), orderBy('t', 'desc')), snap => {
+  rows = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  render();
+}, () => {});
 
-    <script>
-        // إخفاء شاشة التحميل بعد ثانية
-        setTimeout(() => {
-            const loader = document.getElementById('loader');
-            loader.style.opacity = '0';
-            setTimeout(() => loader.style.display = 'none', 500);
-        }, 1000);
+$('showLogin').onclick = () => { $('login').hidden = false; };
+$('logout').onclick = () => signOut(auth);
+$('go').onclick = async () => {
+  $('lst').textContent = 'جاري الدخول...';
+  try { await signInWithEmailAndPassword(auth, $('em').value.trim(), $('pw').value); $('pw').value = ''; }
+  catch(e){ $('lst').textContent = 'الإيميل أو كلمة المرور غير صحيحة'; }
+};
 
-        // بديل تلقائي للصورة
-        const fallbackCanvas = document.createElement('canvas');
-        fallbackCanvas.width = 400; fallbackCanvas.height = 200;
-        const ctx = fallbackCanvas.getContext('2d');
-        ctx.fillStyle = '#0f111a';
-        ctx.fillRect(0, 0, 400, 200);
-        ctx.fillStyle = '#38bdf8';
-        ctx.font = 'bold 20px Segoe UI';
-        ctx.textAlign = 'center';
-        ctx.fillText('Delta Executor PRO', 200, 105);
-        
-        document.getElementById('toolImg').onerror = function() {
-            this.src = fallbackCanvas.toDataURL();
-        };
-    </script>
+// ضغط الصورة وتحويلها لنص صغير (بدون Firebase Storage)
+function shrink(file, max = 400){
+  return new Promise((res, rej) => {
+    const img = new Image(), url = URL.createObjectURL(file);
+    img.onload = () => {
+      const s = Math.min(1, max / Math.max(img.width, img.height));
+      const c = document.createElement('canvas');
+      c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url); res(c.toDataURL('image/jpeg', 0.8));
+    };
+    img.onerror = rej; img.src = url;
+  });
+}
+
+$('add').onclick = async () => {
+  const name = $('n').value.trim();
+  if (!name){ $('st').textContent = 'اكتب الاسم أولاً'; return; }
+  $('add').disabled = true; $('st').textContent = 'جاري الإضافة...';
+  try {
+    const f = $('p').files[0];
+    const photo = f ? await shrink(f) : '';
+    await addDoc(collection(db, 'nominees'), { name, award: $('a').value.trim(), desc: $('d').value.trim(), photo, t: Date.now() });
+    $('n').value = $('a').value = $('d').value = $('p').value = '';
+    $('st').textContent = 'تمت الإضافة ✅';
+  } catch(e){ $('st').textContent = 'فشلت الإضافة (تأكد من قواعد Firestore)'; }
+  $('add').disabled = false;
+};
+</script>
 </body>
 </html>
